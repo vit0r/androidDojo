@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MarvelsAPP</string>
+    <string name="request_queue">Download completo.</string>
+    <string name="fragment_splash">splash_tag</string>
+    <string name="character_name">Nome do personagem clicado é</string>
+    <string name="character_list_fragment">character_list_fragment</string>
+    <string name="empty">Nenhum personagem econtrado</string>
+    <string name="dialog">dialog_fragment</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_character_detail">dialog_character_detail</string>
+    <string name="character_comics_list_fragment">character_comics_list</string>
+</resources>
