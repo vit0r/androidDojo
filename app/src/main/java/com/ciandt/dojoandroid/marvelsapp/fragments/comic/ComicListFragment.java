@@ -8,6 +8,7 @@ import com.ciandt.dojoandroid.marvelsapp.R;
 import com.ciandt.dojoandroid.marvelsapp.adapters.comic.ComicAdapter;
 import com.ciandt.dojoandroid.marvelsapp.models.comic.Comic;
 import com.ciandt.dojoandroid.marvelsapp.models.schemadata.SchemaData;
+import com.ciandt.dojoandroid.marvelsapp.utils.adapters.interfaces.AdapterUtilInterface;
 import com.ciandt.dojoandroid.marvelsapp.utils.commons.Common;
 import com.ciandt.dojoandroid.marvelsapp.utils.fragments.implementations.ListFragmentUtil;
 
@@ -23,7 +24,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by vnaraujo on 20/07/2016.
  */
-public class ComicListFragment extends ListFragmentUtil<Comic> {
+public class ComicListFragment extends ListFragmentUtil<Comic> implements AdapterUtilInterface<Comic> {
 
     private final String KEY_CHARACTER_ID = "CHARACTER_ID";
     private final String KEY_LIST_NAME = "COMIC_LIST";
@@ -44,12 +45,13 @@ public class ComicListFragment extends ListFragmentUtil<Comic> {
             ArrayList<Comic> mList = savedInstanceState.getParcelableArrayList(KEY_LIST_NAME);
             setmList(mList);
             characterId = savedInstanceState.getInt(KEY_CHARACTER_ID);
+            notifyAdapter();
         } else {
             characterId = getArguments().getInt(KEY_CHARACTER_ID);
         }
     }
 
-    protected void notifyAdapter() {
+    public void notifyAdapter() {
         if (comicAdapter == null) {
             comicAdapter =
                     new ComicAdapter(R.layout.character_comic_list, getActivity(), getFragmentManager(), getmList());
@@ -62,9 +64,9 @@ public class ComicListFragment extends ListFragmentUtil<Comic> {
     @Override
     public void requestAPI() {
         super.requestAPI();
-        Map<String, String> aditionalParams = new HashMap<String, String>();
-        aditionalParams.put("characters",characterId.toString());
-        getmMarvelServiceBase().getComics(Common.getParams(getResources(), getmList().size(),aditionalParams))
+        Map<String, String> additionalParams = new HashMap<String, String>();
+        additionalParams.put("characters",characterId.toString());
+        getmMarvelServiceBase().getComics(Common.getParams(getResources(), getmList().size(),additionalParams))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()

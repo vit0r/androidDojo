@@ -1,4 +1,4 @@
 build
 local.properties
-.iml
+*.iml
 .idea

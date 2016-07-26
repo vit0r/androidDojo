@@ -35,6 +35,7 @@ public class CharacterListFragment extends ListFragmentUtil<Character> implement
         if (savedInstanceState != null) {
             ArrayList<Character> mList = savedInstanceState.getParcelableArrayList(KEY_LIST_NAME);
             setmList(mList);
+            notifyAdapter();
         }
     }
 

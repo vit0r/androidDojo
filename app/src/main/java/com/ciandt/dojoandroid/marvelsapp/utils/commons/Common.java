@@ -1,10 +1,10 @@
 package com.ciandt.dojoandroid.marvelsapp.utils.commons;
 
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.ciandt.dojoandroid.marvelsapp.R;
+import com.ciandt.dojoandroid.marvelsapp.utils.adapters.implementations.DateTypeAdapter;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -14,6 +14,7 @@ import com.google.gson.annotations.SerializedName;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,6 @@ public class Common {
         return md5.toString();
     }
 
-    @NonNull
     public static Gson getGson() {
 
         ExclusionStrategy exclusionStrategy = new ExclusionStrategy() {
@@ -55,7 +55,7 @@ public class Common {
         };
 
         return new GsonBuilder()
-                .setDateFormat(new SimpleDateFormat("dd/MM/yyyy").toPattern())
+                .registerTypeAdapter(Date.class,new DateTypeAdapter())
                 .serializeNulls()
                 .addSerializationExclusionStrategy(exclusionStrategy)
                 .addDeserializationExclusionStrategy(exclusionStrategy)
@@ -63,7 +63,7 @@ public class Common {
                 .create();
     }
 
-    public static Map<String, String> getParams(Resources resources, Integer offset, Map<String, String> aditionalParams) {
+    public static Map<String, String> getParams(Resources resources, Integer offset, Map<String, String> additionalParams) {
         final String PUBLIC_KEY = resources.getString(R.string.publickey);
         final String SECRET_KEY = resources.getString(R.string.secretkey);
         final String TIMESTAMP = String.valueOf(System.currentTimeMillis());
@@ -77,8 +77,8 @@ public class Common {
         params.put("hash", HASH);
         params.put("ts", TIMESTAMP);
 
-        if (aditionalParams != null)
-            params.putAll(aditionalParams);
+        if (additionalParams != null)
+            params.putAll(additionalParams);
 
         return params;
     }

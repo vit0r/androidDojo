@@ -14,6 +14,7 @@ import com.ciandt.dojoandroid.marvelsapp.models.comic.Comic;
 import com.ciandt.dojoandroid.marvelsapp.utils.adapters.implementations.AdapterUtil;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +38,7 @@ public class ComicAdapter extends AdapterUtil<Comic> {
         Picasso.with(getContext()).load(thumbnail).into(imageView);
         textViewTitle.setText(comic.getTitle());
         textViewTitle.setTextColor(Color.DKGRAY);
-        textViewModified.setText(comic.getModified());
+        textViewModified.setText(new SimpleDateFormat("dd/MM/yyyy").format(comic.getModified()));
         layout.setBackgroundColor((position % 2 == 0) ? Color.TRANSPARENT : Color.LTGRAY);
         return layout;
     }

@@ -7,6 +7,8 @@ import com.ciandt.dojoandroid.marvelsapp.utils.models.Thumbnail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created by vnaraujo on 20/07/2016.
  */
@@ -17,7 +19,7 @@ public class Comic implements Parcelable{
     private String title;
     @SerializedName("modified")
     @Expose
-    private String modified;
+    private Date modified;
     @SerializedName("thumbnail")
     @Expose
     private Thumbnail thumbnail;
@@ -29,7 +31,7 @@ public class Comic implements Parcelable{
         return thumbnail;
     }
 
-    public String getModified() {
+    public Date getModified() {
         return modified;
     }
 
@@ -67,7 +69,7 @@ public class Comic implements Parcelable{
         this.title = title;
     }
 
-    public void setModified(String modified) {
+    public void setModified(Date modified) {
         this.modified = modified;
     }
 
