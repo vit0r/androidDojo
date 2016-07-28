@@ -34,7 +34,7 @@ public class ComicListFragment extends ListFragmentUtil<Comic> implements Adapte
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelableArrayList(KEY_LIST_NAME, getmList());
+        savedInstanceState.putParcelableArrayList(KEY_LIST_NAME, getMList());
         savedInstanceState.putInt(KEY_CHARACTER_ID, characterId);
     }
 
@@ -43,7 +43,7 @@ public class ComicListFragment extends ListFragmentUtil<Comic> implements Adapte
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             ArrayList<Comic> mList = savedInstanceState.getParcelableArrayList(KEY_LIST_NAME);
-            setmList(mList);
+            setMList(mList);
             characterId = savedInstanceState.getInt(KEY_CHARACTER_ID);
             notifyAdapter();
         } else {
@@ -54,7 +54,7 @@ public class ComicListFragment extends ListFragmentUtil<Comic> implements Adapte
     public void notifyAdapter() {
         if (comicAdapter == null) {
             comicAdapter =
-                    new ComicAdapter(R.layout.character_comic_list, getActivity(), getFragmentManager(), getmList());
+                    new ComicAdapter(R.layout.character_comic_list, getActivity(), getFragmentManager(), getMList());
         } else {
             comicAdapter.notifyDataSetChanged();
         }
@@ -66,7 +66,7 @@ public class ComicListFragment extends ListFragmentUtil<Comic> implements Adapte
         super.requestAPI();
         Map<String, String> additionalParams = new HashMap<String, String>();
         additionalParams.put("characters",characterId.toString());
-        getmMarvelServiceBase().getComics(Common.getParams(getResources(), getmList().size(),additionalParams))
+        getMMarvelServiceBase().getComics(Common.getParams(getResources(), getMList().size(),additionalParams))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()

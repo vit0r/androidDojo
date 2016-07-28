@@ -21,19 +21,19 @@ import java.util.ArrayList;
 public class ListFragmentUtil<T> extends ListFragment implements AbsListView.OnScrollListener {
 
     private ArrayList<T> mList;
-    private static Integer mTotal;
+    private Integer mTotal;
     private MarvelServiceBase mMarvelServiceBase;
     private ListAdapter mListAdapter;
 
-    public ArrayList<T> getmList() {
+    public ArrayList<T> getMList() {
         return mList;
     }
 
-    public void setmList(ArrayList<T> mList) {
+    public void setMList(ArrayList<T> mList) {
         this.mList = mList;
     }
 
-    public MarvelServiceBase getmMarvelServiceBase() {
+    public MarvelServiceBase getMMarvelServiceBase() {
         return mMarvelServiceBase;
     }
 
@@ -43,12 +43,8 @@ public class ListFragmentUtil<T> extends ListFragment implements AbsListView.OnS
             setListAdapter(mListAdapter);
     }
 
-    public static Integer getmTotal() {
+    public Integer getmTotal() {
         return mTotal;
-    }
-
-    public static void setmTotal(Integer mTotal) {
-        ListFragmentUtil.mTotal = mTotal;
     }
 
     @Override
@@ -106,7 +102,7 @@ public class ListFragmentUtil<T> extends ListFragment implements AbsListView.OnS
     }
 
     public void addItens(Data data) {
-        setmTotal(data.getTotal());
+        mTotal = data.getTotal();
         if (getmTotal() > 0) {
             mList.addAll(data.getResults());
         }

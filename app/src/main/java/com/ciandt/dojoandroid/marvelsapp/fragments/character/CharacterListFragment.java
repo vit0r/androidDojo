@@ -26,7 +26,7 @@ public class CharacterListFragment extends ListFragmentUtil<Character> implement
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelableArrayList(KEY_LIST_NAME, getmList());
+        savedInstanceState.putParcelableArrayList(KEY_LIST_NAME, getMList());
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CharacterListFragment extends ListFragmentUtil<Character> implement
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             ArrayList<Character> mList = savedInstanceState.getParcelableArrayList(KEY_LIST_NAME);
-            setmList(mList);
+            setMList(mList);
             notifyAdapter();
         }
     }
@@ -42,7 +42,7 @@ public class CharacterListFragment extends ListFragmentUtil<Character> implement
     public void notifyAdapter() {
         if (characterAdapter == null) {
             characterAdapter =
-                    new CharacterAdapter(R.layout.fragment_character_list, getContext(), getFragmentManager(), getmList());
+                    new CharacterAdapter(R.layout.fragment_character_list, getContext(), getFragmentManager(), getMList());
         } else {
             characterAdapter.notifyDataSetChanged();
         }
@@ -52,7 +52,7 @@ public class CharacterListFragment extends ListFragmentUtil<Character> implement
     @Override
     public void requestAPI() {
         super.requestAPI();
-        getmMarvelServiceBase().getCharacters(Common.getParams(getResources(), getmList().size(),null))
+        getMMarvelServiceBase().getCharacters(Common.getParams(getResources(), getMList().size(),null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
