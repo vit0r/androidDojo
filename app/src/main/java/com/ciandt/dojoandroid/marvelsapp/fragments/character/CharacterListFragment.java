@@ -19,7 +19,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class CharacterListFragment extends ListFragmentUtil<Character> implements AdapterUtilInterface<Character> {
+public class CharacterListFragment extends ListFragmentUtil<Character> implements AdapterUtilInterface {
     private CharacterAdapter characterAdapter;
     private final String KEY_LIST_NAME = "CHARACTER_LIST";
 

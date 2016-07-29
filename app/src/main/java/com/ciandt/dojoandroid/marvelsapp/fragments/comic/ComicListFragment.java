@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by vnaraujo on 20/07/2016.
  */
-public class ComicListFragment extends ListFragmentUtil<Comic> implements AdapterUtilInterface<Comic> {
+public class ComicListFragment extends ListFragmentUtil<Comic> implements AdapterUtilInterface {
 
     private final String KEY_CHARACTER_ID = "CHARACTER_ID";
     private final String KEY_LIST_NAME = "COMIC_LIST";
