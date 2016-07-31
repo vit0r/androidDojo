@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by vnaraujo on 08/07/2016.
  */
-abstract public class AdapterUtil<T> extends BaseAdapter{
+abstract public class AdapterUtil<T> extends BaseAdapter {
 
     private Context context;
     private ArrayList<T> mList;
@@ -22,7 +22,7 @@ abstract public class AdapterUtil<T> extends BaseAdapter{
     private Integer layoutId;
     private View layout;
 
-    public AdapterUtil(final Integer layoutId,final Context context, final FragmentManager fragmentManager, ArrayList<T> mList) {
+    public AdapterUtil(final Integer layoutId, final Context context, final FragmentManager fragmentManager, ArrayList<T> mList) {
         this.layoutId = layoutId;
         this.context = context;
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,16 +38,12 @@ abstract public class AdapterUtil<T> extends BaseAdapter{
         return fragmentManager;
     }
 
-    public void setFragmentManager(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
-    }
-
-    public ArrayList<T> getmList() {
-        return mList;
-    }
-
     public Context getContext() {
         return context;
+    }
+
+    public ArrayList<T> getMList() {
+        return mList;
     }
 
     @Override

@@ -24,6 +24,7 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
     private Integer mTotal;
     private MarvelServiceBase mMarvelServiceBase;
     private ListAdapter mListAdapter;
+    private final String KEY_MTOTAL = "KEY_MTOTAL";
 
     public ArrayList<T> getMList() {
         return mList;
@@ -43,8 +44,14 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
             setListAdapter(mListAdapter);
     }
 
-    public Integer getmTotal() {
+    public Integer getMTotal() {
         return mTotal;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(KEY_MTOTAL, mTotal);
     }
 
     @Override
@@ -52,8 +59,10 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             mList = new ArrayList<T>();
-            mMarvelServiceBase = MarvelService.getService(getResources().getString(R.string.base_url));
+        } else {
+            mTotal = savedInstanceState.getInt(KEY_MTOTAL);
         }
+        mMarvelServiceBase = MarvelService.getService(getResources().getString(R.string.base_url));
     }
 
     @Override
@@ -103,9 +112,8 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
 
     public void addItens(Data data) {
         mTotal = data.getTotal();
-        if (getmTotal() > 0) {
+        if (getMTotal() > 0)
             mList.addAll(data.getResults());
-        }
     }
 
     @Override

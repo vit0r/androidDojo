@@ -52,7 +52,7 @@ public class CharacterListFragment extends ListFragmentUtil<Character> implement
     @Override
     public void requestAPI() {
         super.requestAPI();
-        getMMarvelServiceBase().getCharacters(Common.getParams(getResources(), getMList().size(),null))
+        getMMarvelServiceBase().getCharacters(Common.getParams(getResources(), getMList().size(), null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()

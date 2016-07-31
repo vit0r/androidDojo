@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by vnaraujo on 25/07/2016.
  */
-public class CharacterAdapter extends AdapterUtil<Character>{
+public class CharacterAdapter extends AdapterUtil<Character> {
     public CharacterAdapter(Integer layoutId, Context context, FragmentManager fragmentManager, ArrayList<Character> mList) {
         super(layoutId, context, fragmentManager, mList);
     }
@@ -35,7 +35,7 @@ public class CharacterAdapter extends AdapterUtil<Character>{
     public View getView(int position, View view, ViewGroup viewGroup) {
         super.getView(position, null, viewGroup);
         View layout = getLayout();
-        final Character character = getmList().get(position);
+        final Character character = getMList().get(position);
         ImageView imageView = ((ImageView) layout.findViewById(R.id.thumbnail));
         TextView textViewName = ((TextView) layout.findViewById(R.id.name));
         String thumbnail = String.format("%s.%s", character.getThumbnail().getPath(), character.getThumbnail().getExtension());

@@ -30,7 +30,7 @@ public class ComicAdapter extends AdapterUtil<Comic> {
     public View getView(int position, View view, ViewGroup viewGroup) {
         super.getView(position, null, viewGroup);
         View layout = getLayout();
-        final Comic comic = getmList().get(position);
+        final Comic comic = getMList().get(position);
         ImageView imageView = ((ImageView) layout.findViewById(R.id.thumbnail));
         TextView textViewTitle = ((TextView) layout.findViewById(R.id.title));
         TextView textViewModified = ((TextView) layout.findViewById(R.id.modified));

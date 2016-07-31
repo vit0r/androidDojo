@@ -65,8 +65,8 @@ public class ComicListFragment extends ListFragmentUtil<Comic> implements Adapte
     public void requestAPI() {
         super.requestAPI();
         Map<String, String> additionalParams = new HashMap<String, String>();
-        additionalParams.put("characters",characterId.toString());
-        getMMarvelServiceBase().getComics(Common.getParams(getResources(), getMList().size(),additionalParams))
+        additionalParams.put("characters", characterId.toString());
+        getMMarvelServiceBase().getComics(Common.getParams(getResources(), getMList().size(), additionalParams))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()

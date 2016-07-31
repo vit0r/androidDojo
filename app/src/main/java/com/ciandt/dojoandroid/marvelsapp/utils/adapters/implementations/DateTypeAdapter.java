@@ -9,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,9 +21,8 @@ import java.util.TimeZone;
  */
 public class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
     private final SimpleDateFormat simpleDateFormat;
-
     public DateTypeAdapter() {
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.US);
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.ENGLISH);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 

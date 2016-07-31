@@ -4,5 +4,4 @@
     <string name="publickey"></string>
     <string name="secretkey"></string>
     <integer name="limit_results">20</integer>
-    <string name="comics">Comics</string>
 </resources>
