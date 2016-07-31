@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by vnaraujo on 08/07/2016.
  */
-public class AdapterUtil<T> extends BaseAdapter{
+abstract public class AdapterUtil<T> extends BaseAdapter{
 
     private Context context;
     private ArrayList<T> mList;

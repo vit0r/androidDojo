@@ -18,7 +18,7 @@ import com.ciandt.dojoandroid.marvelsapp.services.MarvelService;
 
 import java.util.ArrayList;
 
-public class ListFragmentUtil<T> extends ListFragment implements AbsListView.OnScrollListener {
+abstract public class ListFragmentUtil<T> extends ListFragment implements AbsListView.OnScrollListener {
 
     private ArrayList<T> mList;
     private Integer mTotal;
