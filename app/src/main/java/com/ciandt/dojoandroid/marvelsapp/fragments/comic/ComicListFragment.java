@@ -1,7 +1,6 @@
 package com.ciandt.dojoandroid.marvelsapp.fragments.comic;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.ciandt.dojoandroid.marvelsapp.R;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -64,31 +64,37 @@ public class ComicListFragment extends ListFragmentUtil<Comic> implements Adapte
     @Override
     public void requestAPI() {
         super.requestAPI();
-        Map<String, String> additionalParams = new HashMap<String, String>();
+        Map<String, String> additionalParams = new HashMap();
         additionalParams.put("characters", characterId.toString());
-        getMMarvelServiceBase().getComics(Common.getParams(getResources(), getMList().size(), additionalParams))
+        getMCompositeSubscription().add(getObservable(additionalParams).subscribe(getObserver()));
+    }
+
+    private Observer<SchemaData<Comic>> getObserver() {
+        return new Observer<SchemaData<Comic>>() {
+            @Override
+            public void onCompleted() {
+                detachSplashScreen();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(SchemaData schemaData) {
+                addItens(schemaData.getData());
+                notifyAdapter();
+            }
+        };
+    }
+
+    private Observable getObservable(Map<String, String> additionalParams) {
+        return getMMarvelServiceBase().getComics(Common.getParams(getResources(), getMList().size(), additionalParams))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .distinct()
                 .timeout(30, TimeUnit.SECONDS)
-                .retry(3)
-                .subscribe(new Observer<SchemaData<Comic>>() {
-                    @Override
-                    public void onCompleted() {
-                        detachSplashScreen();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-                        Log.e("marvelServiceBase", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(SchemaData schemaData) {
-                        addItens(schemaData.getData());
-                        notifyAdapter();
-                    }
-                });
+                .retry(3);
     }
 }

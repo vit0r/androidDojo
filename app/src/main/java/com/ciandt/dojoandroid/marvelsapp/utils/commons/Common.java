@@ -13,7 +13,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +69,7 @@ public class Common {
         final String HASH = Common.md5(TIMESTAMP + SECRET_KEY + PUBLIC_KEY);
         Integer numResults = resources.getInteger(R.integer.limit_results);
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap();
         params.put("limit", numResults.toString());
         params.put("offset", offset.toString());
         params.put("apikey", PUBLIC_KEY);

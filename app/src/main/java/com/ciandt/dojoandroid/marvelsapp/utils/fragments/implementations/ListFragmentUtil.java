@@ -18,6 +18,8 @@ import com.ciandt.dojoandroid.marvelsapp.services.MarvelService;
 
 import java.util.ArrayList;
 
+import rx.subscriptions.CompositeSubscription;
+
 abstract public class ListFragmentUtil<T> extends ListFragment implements AbsListView.OnScrollListener {
 
     private ArrayList<T> mList;
@@ -25,6 +27,7 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
     private MarvelServiceBase mMarvelServiceBase;
     private ListAdapter mListAdapter;
     private final String KEY_MTOTAL = "KEY_MTOTAL";
+    private CompositeSubscription mCompositeSubscription;
 
     public ArrayList<T> getMList() {
         return mList;
@@ -44,38 +47,8 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
             setListAdapter(mListAdapter);
     }
 
-    public Integer getMTotal() {
-        return mTotal;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt(KEY_MTOTAL, mTotal);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            mList = new ArrayList<T>();
-        } else {
-            mTotal = savedInstanceState.getInt(KEY_MTOTAL);
-        }
-        mMarvelServiceBase = MarvelService.getService(getResources().getString(R.string.base_url));
-    }
-
-    @Override
-    public void onActivityCreated(Bundle saveInstantState) {
-        super.onActivityCreated(saveInstantState);
-        getListView().setOnScrollListener(this);
-        if (mList.size() == 0)
-            requestAPI();
-    }
-
-    @Override
-    public void setListShown(boolean shown) {
-        super.setListShown(shown);
+    public CompositeSubscription getMCompositeSubscription() {
+        return mCompositeSubscription;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,6 +72,46 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
         setListShown(true);
     }
 
+    public void addItens(Data data) {
+        mTotal = data.getTotal();
+        if (mTotal > 0)
+            mList.addAll(data.getResults());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(KEY_MTOTAL, mTotal);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            mList = new ArrayList<T>();
+            mCompositeSubscription = new CompositeSubscription();
+        } else
+            mTotal = savedInstanceState.getInt(KEY_MTOTAL);
+
+        if (mCompositeSubscription.hasSubscriptions())
+            mCompositeSubscription.clear();
+
+        mMarvelServiceBase = MarvelService.getService(getResources().getString(R.string.base_url));
+    }
+
+    @Override
+    public void onActivityCreated(Bundle saveInstantState) {
+        super.onActivityCreated(saveInstantState);
+        getListView().setOnScrollListener(this);
+        if (mList.size() == 0)
+            requestAPI();
+    }
+
+    @Override
+    public void setListShown(boolean shown) {
+        super.setListShown(shown);
+    }
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         Integer position = mList.size() - 1;
@@ -108,12 +121,6 @@ abstract public class ListFragmentUtil<T> extends ListFragment implements AbsLis
             requestAPI();
         else if (!isNotEnd && scrollInEnd)
             Toast.makeText(getActivity(), String.format("%d de %d", mList.size(), mTotal), Toast.LENGTH_LONG).show();
-    }
-
-    public void addItens(Data data) {
-        mTotal = data.getTotal();
-        if (getMTotal() > 0)
-            mList.addAll(data.getResults());
     }
 
     @Override
